@@ -1,11 +1,17 @@
 # AMP and PWA
 
-In this lab you learn how to make an app containing AMP pages into a PWA.
-You also learn how to use AMP pages as data inside a PWA.
+In this codelab, you’ll convert an app containing AMP pages into a PWA using two different patterns:
+
+1. transform an AMP site into a PWA (AMP as PWA)
+2. use the App Shell architecture to create a PWA that uses AMP as content (AMP in PWA)
+
+AMP+PWA gives you the best of both worlds: a lightning fast first load with AMP, and native-like capabilities in the PWA.
+
+You'll also get a chance to use [Workbox](https://workboxjs.org/). 
 
 ## Getting started
 
-Clone the repository and navigate to **amp-pwa/project**.
+Clone the repository and navigate to **amp-pwa-workbox/project**.
 
 [Download and install Node.js](https://nodejs.org/en/download/).
 

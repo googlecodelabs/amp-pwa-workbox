@@ -1,4 +1,4 @@
-# Workbox
+# AMP and PWA
 
 In this lab you learn how to make an app containing AMP pages into a PWA.
 You also learn how to use AMP pages as data inside a PWA.

@@ -15,6 +15,13 @@ Clone the repository and navigate to **amp-pwa-workbox/project**.
 
 [Download and install Node.js](https://nodejs.org/en/download/).
 
+## More resources
+
+* [Workbox codelab](https://codelabs.developers.google.com/codelabs/workbox-lab/#0)
+* [AMP Foundations codelab](https://codelabs.developers.google.com/codelabs/accelerated-mobile-pages-foundations/#0)
+* [AMP Advanced Concepts codelab](https://codelabs.developers.google.com/codelabs/accelerated-mobile-pages/#0)
+* [PWA training materials](https://developers.google.com/web/ilt/pwa/)
+
 ## License
 
 Copyright 2016 Google Inc.

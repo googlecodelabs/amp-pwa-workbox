@@ -67,7 +67,7 @@ workboxSW.precache([
   },
   {
     "url": "js/app.js",
-    "revision": "87d8f3c46c5d3c937f98fd5edc511c77"
+    "revision": "a559068ed5e2e8dbeac6e41acae80bb3"
   },
   {
     "url": "/",
@@ -75,17 +75,12 @@ workboxSW.precache([
   }
 ]);
 
-workboxSW.router.registerRoute(/\/(.*)\.(?:js|css|png|gif|jpg|svg)$/,
-  workboxSW.strategies.cacheFirst()
-);
-
-workboxSW.router.registerRoute(/\/$|\.html$/, args => {
+workboxSW.router.registerRoute('/*', args => {
+  if (args.event.request.mode !== 'navigate') {
+    return workboxSW.strategies.cacheFirst().handle(args);
+  }
   return caches.match('/shell.html', {ignoreSearch: true});
 });
-
-workboxSW.router.registerRoute(/\/(.*)?shell=false$/,
-  workboxSW.strategies.cacheFirst()
-);
 
 workboxSW.router.registerRoute(/(.*)cdn\.ampproject\.org(.*)/,
   workboxSW.strategies.staleWhileRevalidate()

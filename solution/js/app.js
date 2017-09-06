@@ -70,8 +70,7 @@ class AmpPage {
   };
 
   loadDocument(url) {
-    const newUrl = url + '?shell=false';
-    return this._fetchDocument(newUrl).then(document => {
+    return this._fetchDocument(url).then(document => {
       router.replaceLinks(document);
       const header = document.querySelector('.header');
       header.remove();

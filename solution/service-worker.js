@@ -63,17 +63,27 @@ workboxSW.precache([
   },
   {
     "url": "shell.html",
-    "revision": "a9c2efe08f1060ee956924881932cf87"
+    "revision": "bef87a0b6c4be31db7d009db09b0ec6e"
   },
   {
     "url": "js/app.js",
-    "revision": "a559068ed5e2e8dbeac6e41acae80bb3"
+    "revision": "78078857e8484a850066696343bed3b8"
   },
   {
     "url": "/",
     "revision": "d0e6e1bff5558fce0e8845f7f19f006a"
   }
 ]);
+
+self.addEventListener('install', (event) => {
+  const urls = [
+    'https://cdn.ampproject.org/v0.js',
+    'https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js',
+    'https://cdn.ampproject.org/shadow-v0.js'
+  ];
+  const cacheName = workboxSW.runtimeCacheName;
+  event.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(urls)));
+});
 
 workboxSW.router.registerRoute('/*', args => {
   if (args.event.request.mode !== 'navigate') {

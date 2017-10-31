@@ -23,7 +23,7 @@ workboxSW.precache([
   },
   {
     "url": "offline.html",
-    "revision": "3ea57a53f8b6bf78a088fe9c575260d6"
+    "revision": "94dd6ac1d7365bbe74885248089db062"
   },
   {
     "url": "icons/icon-128x128.png",
@@ -56,14 +56,6 @@ workboxSW.precache([
   {
     "url": "icons/icon-96x96.png",
     "revision": "3c0ded96a9d6cde35894280216bfb5d9"
-  },
-  {
-    "url": "shell.html",
-    "revision": "cc671b5851ffd5e6c281f6d64ca072cc"
-  },
-  {
-    "url": "js/app.js",
-    "revision": "4a31acb02beaac7d2b4524b981301cf5"
   }
 ]);
 
@@ -80,10 +72,12 @@ self.addEventListener('install', (event) => {
 });
 
 workboxSW.router.registerRoute(/(.*)(((index)|(\/articles\/))(.*)html)|(.*)\/$/, args => {
-  if (args.event.request.mode !== 'navigate') {
-    return workboxSW.strategies.cacheFirst().handle(args);
-  }
-  return caches.match('/shell.html', {ignoreSearch: true});
+  return workboxSW.strategies.networkFirst().handle(args).then(response => {
+    if (!response) {
+      return caches.match('offline.html');
+    }
+    return response;
+  });
 });
 
 workboxSW.router.registerRoute(/(.*)\.(?:js|css|png|gif|jpg|svg)/,

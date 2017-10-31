@@ -17,15 +17,7 @@
 'use strict';
 class Router {
   replaceLinks(document) {
-    if ('serviceWorker' in navigator) {
-      return;
-    }
-    const elements = document.getElementsByTagName('a');
-    for (let i = 0; i < elements.length; i++) {
-      const anchor = elements[i];
-      const href = anchor.href;
-      anchor.href = '/shell.html#href=' + encodeURIComponent(href);
-    }
+    // TODO replace links
   }
 }
 
@@ -70,38 +62,14 @@ class AmpPage {
   };
 
   loadDocument(url) {
-    return this._fetchDocument(url).then(document => {
-      router.replaceLinks(document);
-      const header = document.querySelector('.header');
-      header.remove();
-      window.AMP.attachShadowDoc(this.rootElement, document, url);
-    });
+    // TODO: Add code to load a document and attach to Shadow Root
   }
 }
-
-function getContentUri() {
-  const hash = window.location.hash;
-  if (hash && hash.indexOf('href=') > -1) {
-    return decodeURIComponent(hash.substr(6));
-  }
-  return window.location;
-}
-
 
 const ampReadyPromise = new Promise(resolve => {
   (window.AMP = window.AMP || []).push(resolve);
 });
 const router = new Router();
-router.replaceLinks(document);
 
-const ampRoot = document.querySelector('#amproot');
-// const url = document.location.href;
-const url = getContentUri();
-const amppage = new AmpPage(ampRoot, router);
-ampReadyPromise.then(() => {
-  return amppage.loadDocument(url);
-}).then(() => {
-  if (window.history) {
-    window.history.replaceState({}, '', url);
-  }
-});
+// TODO: get a reference to the container and URL, and load the AMP page
+// when ampReadyPromise resolves.

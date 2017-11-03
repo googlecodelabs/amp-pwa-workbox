@@ -30,7 +30,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(urls)));
 });
 
-workboxSW.router.registerRoute(/(.*)(((index)|(\/articles\/))(.*)html)|(.*)\/$/, args => {
+workboxSW.router.registerRoute(/(.*)((index|\/articles\/)(.*)html)|(.*)\/$/, args => {
   return workboxSW.strategies.networkFirst().handle(args).then(response => {
     if (!response) {
       return caches.match('offline.html');

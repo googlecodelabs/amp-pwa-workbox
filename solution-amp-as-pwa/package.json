@@ -1,0 +1,20 @@
+{
+  "name": "amp-pwa-lab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "workbox-sw.dev.v2.0.0.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server -p 8081 -a localhost -c 0",
+    "build": "workbox inject:manifest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "0.10.0",
+    "workbox-cli": "2.1.1"
+  },
+  "dependencies": {
+    "workbox-sw": "2.0.0"
+  }
+}

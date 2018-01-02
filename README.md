@@ -7,13 +7,11 @@ In this codelab, you’ll convert an app containing AMP pages into a PWA using t
 
 AMP+PWA gives you the best of both worlds: a lightning fast first load with AMP, and native-like capabilities in the PWA.
 
-You'll also get a chance to use [Workbox](https://workboxjs.org/). 
+You'll also get a chance to use [Workbox](https://workboxjs.org/).
 
 ## Getting started
 
-Clone the repository and navigate to **amp-pwa-workbox/project**.
-
-[Download and install Node.js](https://nodejs.org/en/download/).
+Follow the [Google Codelabs instructions](https://codelabs.developers.google.com/codelabs/amp-pwa-workbox/index.html?index=..%2F..%2Findex#0).
 
 ## More resources
 

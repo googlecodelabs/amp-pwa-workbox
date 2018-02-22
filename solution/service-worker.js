@@ -1,5 +1,5 @@
 /*
-Copyright 2016 Google Inc.
+Copyright 2018 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,10 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-importScripts('workbox-sw.dev.v2.0.0.js');
+// TODO - update when Workbox v3 is published
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0-alpha.6/workbox-sw.js');
 
-const workboxSW = new self.WorkboxSW();
-workboxSW.precache([
+workbox.precaching.precacheAndRoute([
   {
     "url": "img/amp_logo_white.svg",
     "revision": "ff1c832025faf6ebb36c3385ee1434c5"
@@ -56,40 +56,61 @@ workboxSW.precache([
   {
     "url": "icons/icon-96x96.png",
     "revision": "3c0ded96a9d6cde35894280216bfb5d9"
-  },
-  {
-    "url": "shell.html",
-    "revision": "cc671b5851ffd5e6c281f6d64ca072cc"
-  },
-  {
-    "url": "js/app.js",
-    "revision": "4a31acb02beaac7d2b4524b981301cf5"
   }
 ]);
 
-self.addEventListener('install', (event) => {
-  const urls = [
-    'https://cdn.ampproject.org/v0.js',
-    'https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js',
-    'https://cdn.ampproject.org/shadow-v0.js',
-    'index.html',
-    '/'
-  ];
-  const cacheName = workboxSW.runtimeCacheName;
-  event.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(urls)));
+
+
+workbox.routing.registerRoute(/(index|\/articles\/)(.*)html|(.*)\/$/, args => {
+  return workbox.strategies.networkFirst().handle(args).then(response => {
+    if (!response) {
+      return caches.match('offline.html');
+    }
+    return response;
+  });
 });
 
-workboxSW.router.registerRoute(/(.*)(((index)|(\/articles\/))(.*)html)|(.*)\/$/, args => {
-  if (args.event.request.mode !== 'navigate') {
-    return workboxSW.strategies.cacheFirst().handle(args);
-  }
-  return caches.match('/shell.html', {ignoreSearch: true});
-});
-
-workboxSW.router.registerRoute(/(.*)\.(?:js|css|png|gif|jpg|svg)/,
-  workboxSW.strategies.cacheFirst()
+workbox.routing.registerRoute(/\.(?:js|css|png|gif|jpg|svg)$/,
+  workbox.strategies.cacheFirst()
 );
 
-workboxSW.router.registerRoute(/(.*)cdn\.ampproject\.org(.*)/,
-  workboxSW.strategies.staleWhileRevalidate()
+workbox.routing.registerRoute(/(.*)cdn\.ampproject\.org(.*)/,
+  workbox.strategies.staleWhileRevalidate()
 );
+
+// workbox.precaching.precache([
+//   'https://cdn.ampproject.org/v0.js',
+//   'https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js',
+//   'https://cdn.ampproject.org/shadow-v0.js',
+// ]);
+
+// workbox.routing.registerRoute(/((index)|(\/articles\/))(.*)html|(.*)\/$/, args => {
+//   if (args.event.request.mode !== 'navigate') {
+//     return workbox.strategies.cacheFirst().handle(args);
+//   }
+//   return caches.match('/shell.html', {ignoreSearch: true});
+// });
+//
+// workbox.routing.registerRoute(/(.*)\.(?:js|css|png|gif|jpg|svg)/,
+//   workbox.strategies.cacheFirst()
+// );
+//
+// workbox.routing.registerRoute(/(.*)cdn\.ampproject\.org(.*)/,
+//   workbox.strategies.staleWhileRevalidate({
+//     cacheName: workbox.core.cacheNames.precache
+//   })
+// );
+
+// workbox.routing.registerRoute(/\/articles\/(.*)html|(.*)\/$/, args => {
+//   return workbox.strategies.networkFirst().handle(args).then(response => {
+//     if (!response) {
+//       return caches.match('offline.html');
+//     }
+//     return response;
+//   });
+// });
+//
+// workbox.routing.registerRoute(/(.*)\.(?:js|css|png|gif|jpg|svg)/,
+//   workbox.strategies.cacheFirst()
+// );
+//

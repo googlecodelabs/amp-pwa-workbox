@@ -1,5 +1,5 @@
 /*
-Copyright 2016 Google Inc.
+Copyright 2018 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,11 +18,13 @@ module.exports = {
   "globPatterns": [
     "img/**.*",
     "offline.html",
-    "icons/**.*"
+    "icons/**.*",
+    "shell.html",
+    "js/app.js"
   ],
   "swSrc": "src/sw.js",
-  "swDest": "service-worker.js",
+  "swDest": "sw.js",
   "globIgnores": [
-    "./workbox-cli-config.js"
+    "./workbox-config.js"
   ]
 };

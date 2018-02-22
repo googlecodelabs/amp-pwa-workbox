@@ -1,4 +1,4 @@
-<!--
+/*
 Copyright 2018 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,25 +12,17 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<!doctype html>
-<html>
-  <head>
-    <title>Installing service worker</title>
-    <script type="text/javascript">
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('sw.js')
-          .then(swReg => {
-            console.log('Service Worker is registered', swReg);
-          })
-          .catch(err => {
-            console.error('Service Worker Error', err);
-          });
-        });
-      }
-    </script>
-  </head>
-  <body>
-  </body>
-</html>
+*/
+module.exports = {
+  "globDirectory": "./",
+  "globPatterns": [
+    "img/**.*",
+    "offline.html",
+    "icons/**.*"
+  ],
+  "swSrc": "src/sw.js",
+  "swDest": "sw.js",
+  "globIgnores": [
+    "./workbox-cli-config.js"
+  ]
+};

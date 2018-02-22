@@ -1,5 +1,5 @@
 /*
-Copyright 2016 Google Inc.
+Copyright 2018 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-importScripts('workbox-sw.dev.v2.0.0.js');
+// TODO - update when Workbox v3 is published
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0-alpha.6/workbox-sw.js');
 
-const workboxSW = new self.WorkboxSW();
-workboxSW.precache([]);
+workbox.precaching.precacheAndRoute([]);
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   const urls = [
     'https://cdn.ampproject.org/v0.js',
     'https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js',
@@ -26,21 +26,21 @@ self.addEventListener('install', (event) => {
     'index.html',
     '/'
   ];
-  const cacheName = workboxSW.runtimeCacheName;
+  const cacheName = workbox.core.cacheNames.runtime;
   event.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(urls)));
 });
 
-workboxSW.router.registerRoute(/(.*)(((index)|(\/articles\/))(.*)html)|(.*)\/$/, args => {
+workbox.routing.registerRoute(/(index|\/articles\/)(.*)html|(.*)\/$/, args => {
   if (args.event.request.mode !== 'navigate') {
-    return workboxSW.strategies.cacheFirst().handle(args);
+    return workbox.strategies.cacheFirst().handle(args);
   }
   return caches.match('/shell.html', {ignoreSearch: true});
 });
 
-workboxSW.router.registerRoute(/(.*)\.(?:js|css|png|gif|jpg|svg)/,
-  workboxSW.strategies.cacheFirst()
+workbox.routing.registerRoute(/\.(?:js|css|png|gif|jpg|svg)$/,
+  workbox.strategies.cacheFirst()
 );
 
-workboxSW.router.registerRoute(/(.*)cdn\.ampproject\.org(.*)/,
-  workboxSW.strategies.staleWhileRevalidate()
+workbox.routing.registerRoute(/(.*)cdn\.ampproject\.org(.*)/,
+  workbox.strategies.staleWhileRevalidate()
 );

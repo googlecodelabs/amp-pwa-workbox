@@ -12,6 +12,6 @@
   "license": "ISC",
   "devDependencies": {
     "http-server": "0.10.0",
-    "workbox-cli": "^3.0.1"
+    "workbox-cli": "^3.4.1"
   }
 }
